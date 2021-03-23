@@ -76,12 +76,12 @@ public class SmartPatientAppAuthenticatorFactory implements AuthenticatorFactory
 
     @Override
     public String getDisplayType() {
-        return "Smart Launch";
+        return "SMART on FHIR Patient Selector for Patient App";
     }
 
     @Override
     public String getReferenceCategory() {
-        return "Smart Launch";
+        return "Smart on FHIR Patient Selecting Launch";
     }
 
     @Override
