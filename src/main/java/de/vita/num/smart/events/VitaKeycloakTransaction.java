@@ -4,9 +4,7 @@ import ca.uhn.fhir.context.FhirContext;
 import ca.uhn.fhir.rest.api.MethodOutcome;
 import ca.uhn.fhir.rest.client.api.IGenericClient;
 import ca.uhn.fhir.rest.client.interceptor.BearerTokenAuthInterceptor;
-import de.vita.num.smart.authentication.AccessTokenBuilder;
-import de.vita.num.smart.authentication.FhirConstants;
-import de.vita.num.smart.authentication.SmartPatientAppAuthenticator;
+import de.vita.num.smart.authentication.*;
 import org.apache.http.HttpHeaders;
 import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpPost;
@@ -28,6 +26,7 @@ import java.net.URI;
 import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
+import static de.vita.num.smart.authentication.ModuleConfiguration.DemographicBaseUrl;
 import static de.vita.num.smart.authentication.SmartPatientAppAuthenticator.*;
 
 public class VitaKeycloakTransaction extends AbstractKeycloakTransaction {
@@ -118,33 +117,37 @@ public class VitaKeycloakTransaction extends AbstractKeycloakTransaction {
         }
     }
 
-    public String createFhirPatientResource(String token,
+    private String createFhirPatientResource(String token,
                                             String pPatientId,
                                             String pFirstName,
-                                            String pFamilyName){
-        FhirContext ctx = FhirContext.forR4();
-        IGenericClient client = ctx.newRestfulGenericClient(FhirConstants.DEMOGRAPHIC_BASE_URL);
+                                            String pFamilyName) throws SmartOnFhirException {
+        try {
+            FhirContext ctx = FhirContext.forR4();
+            IGenericClient client = ctx.newRestfulGenericClient(DemographicBaseUrl());
 
-        BearerTokenAuthInterceptor bearerTokenAuthInterceptor = new BearerTokenAuthInterceptor(token);
-        client.registerInterceptor(bearerTokenAuthInterceptor);
+            BearerTokenAuthInterceptor bearerTokenAuthInterceptor = new BearerTokenAuthInterceptor(token);
+            client.registerInterceptor(bearerTokenAuthInterceptor);
 
-        Patient patient = new Patient();
-        patient
-            .addIdentifier()
-            .setSystem(FhirConstants.PATIENT_IDENIFIER_SYSTEM)
-            .setValue(pPatientId);
-        patient
-            .addName()
-            .setGiven(Arrays.asList(new StringType(pFirstName)))
-            .setFamily(pFamilyName)
-            .setText(pFirstName + " " + pFamilyName);
-        MethodOutcome createPatientOutcome =
-            client
-                .create()
-                .resource(patient)
-                .execute();
+            Patient patient = new Patient();
+            patient
+                .addIdentifier()
+                .setSystem(FhirConstants.PATIENT_IDENIFIER_SYSTEM)
+                .setValue(pPatientId);
+            patient
+                .addName()
+                .setGiven(Arrays.asList(new StringType(pFirstName)))
+                .setFamily(pFamilyName)
+                .setText(pFirstName + " " + pFamilyName);
+            MethodOutcome createPatientOutcome =
+                client
+                    .create()
+                    .resource(patient)
+                    .execute();
 
-        return createPatientOutcome.getId().getIdPart();
+            return createPatientOutcome.getId().getIdPart();
+        } catch (Exception ex) {
+            throw new SmartOnFhirException("Could not create FHIR Patient Resource", ex);
+        }
     }
 
     @Override

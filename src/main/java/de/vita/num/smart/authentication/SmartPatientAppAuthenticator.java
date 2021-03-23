@@ -33,6 +33,8 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import static de.vita.num.smart.authentication.ModuleConfiguration.DemographicBaseUrl;
+
 public class SmartPatientAppAuthenticator implements Authenticator {
 	private static final ServicesLogger logger = ServicesLogger.LOGGER;
 
@@ -87,8 +89,9 @@ public class SmartPatientAppAuthenticator implements Authenticator {
 
     private String findFhirPatientId(String pKeycloakUserId, String pBearerToken) throws SmartOnFhirException {
         try{
+			String fhirDemographicBaseUrl = DemographicBaseUrl();
 			FhirContext fhirContext = FhirContext.forR4();
-			IGenericClient fhirClient = fhirContext.newRestfulGenericClient(FhirConstants.DEMOGRAPHIC_BASE_URL);
+			IGenericClient fhirClient = fhirContext.newRestfulGenericClient(fhirDemographicBaseUrl);
 			fhirContext.getRestfulClientFactory().setServerValidationMode(ServerValidationModeEnum.NEVER);
 
 			BearerTokenAuthInterceptor tokenInterceptor = new BearerTokenAuthInterceptor(pBearerToken);

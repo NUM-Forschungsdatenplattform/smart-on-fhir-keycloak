@@ -2,7 +2,7 @@
 <module xmlns="urn:jboss:module:1.3" name="de.vita.num.smart.keycloak-plugin">
 
 <properties>
-  <property name="sof.plugin" value="bar"/>
+  <property name="demographic.base.url" value="http://localhost:8082/fhir"/>
 </properties>
 
 <resources>
