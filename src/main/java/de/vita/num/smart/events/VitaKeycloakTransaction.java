@@ -57,7 +57,6 @@ public class VitaKeycloakTransaction extends AbstractKeycloakTransaction {
                 _session
                     .users()
                     .getUserById(_userId, realm);
-//        log.info(user.getFirstName());
 
             String accessToken = _accessTokenBuilder.createAccessToken(realm.getId());
 
