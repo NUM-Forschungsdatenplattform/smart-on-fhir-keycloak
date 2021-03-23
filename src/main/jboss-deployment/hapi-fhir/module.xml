@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module xmlns="urn:jboss:module:1.3" name="de.vita.num.smart.hapi.fhir.4">
+    <resources>
+    <resource-root path="checker-qual.jar"/>
+    <resource-root path="failureaccess.jar"/>
+    <resource-root path="j2objc-annotations.jar"/>
+    <resource-root path="listenablefuture.jar"/>
+    <resource-root path="commons-codec.jar"/>
+    <resource-root path="guava.jar"/>
+    <resource-root path="jackson-annotations.jar"/>
+    <resource-root path="org.hl7.fhir.r4.jar"/>
+    <resource-root path="commons-io.jar"/>
+    <resource-root path="hapi-fhir-base.jar"/>
+    <resource-root path="jackson-core.jar"/>
+    <resource-root path="org.hl7.fhir.utilities.jar"/>
+    <resource-root path="commons-lang3.jar"/>
+    <resource-root path="hapi-fhir-client.jar"/>
+    <resource-root path="hapi-fhir-structures-r4.jar"/>
+    <resource-root path="jackson-databind.jar"/>
+    <resource-root path="slf4j-api.jar"/>
+    <resource-root path="commons-text.jar"/>
+    <resource-root path="httpclient.jar"/>
+    <resource-root path="jcl-over-slf4j.jar"/>
+    <resource-root path="error_prone_annotations.jar"/>
+    <resource-root path="httpcore.jar"/>
+    <resource-root path="jsr305.jar"/>
+    </resources>
+</module>
