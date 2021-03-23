@@ -3,6 +3,7 @@
 
 <properties>
   <property name="demographic.base.url" value="http://localhost:8082/fhir"/>
+  <property name="fhirbridge.ehradmin.endpoint.url" value="http://localhost:8888/fhir-bridge/ehradmin"/>
 </properties>
 
 <resources>

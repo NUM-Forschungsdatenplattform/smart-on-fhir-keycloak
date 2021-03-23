@@ -27,6 +27,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import static de.vita.num.smart.authentication.ModuleConfiguration.DemographicBaseUrl;
+import static de.vita.num.smart.authentication.ModuleConfiguration.FhirBridgeEHRAdminEndpointUrl;
 import static de.vita.num.smart.authentication.SmartPatientAppAuthenticator.*;
 
 public class VitaKeycloakTransaction extends AbstractKeycloakTransaction {
@@ -90,7 +91,7 @@ public class VitaKeycloakTransaction extends AbstractKeycloakTransaction {
 
     public String createEhrBaseEhr(String pFhirPatientId, String pToken){
         try (CloseableHttpClient httpC = HttpClients.createDefault()) {
-            HttpPost post = new HttpPost("http://localhost:8888/fhir-bridge/ehradmin");
+            HttpPost post = new HttpPost(FhirBridgeEHRAdminEndpointUrl());
 
             URI uri = new URIBuilder(post.getURI())
                 .addParameter("pPatientId", pFhirPatientId)
