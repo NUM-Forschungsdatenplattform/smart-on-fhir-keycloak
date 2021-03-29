@@ -28,6 +28,7 @@ import java.util.List;
 import java.util.Map;
 
 import static de.vita.num.smart.authentication.SmartPatientAppAuthenticator.CLIENT_SESSION_NOTE_KEY;
+import static de.vita.num.smart.authentication.SmartPatientAppAuthenticator.SCOPE_LAUNCH_PATIENT;
 import static de.vita.num.smart.authentication.SmartPatientAppAuthenticator.TokenRegistry;
 
 public class ClientSessionNoteMapper extends AbstractOIDCProtocolMapper implements OIDCAccessTokenMapper, OIDCIDTokenMapper, ServerInfoAwareProviderFactory {
@@ -142,6 +143,11 @@ public class ClientSessionNoteMapper extends AbstractOIDCProtocolMapper implemen
                 noteValue = TokenRegistry.get(fhirPatientIdKey);
                 if (noteValue != null) {
                     TokenRegistry.remove(fhirPatientIdKey);
+					// write this to session so that cookie based authentication
+					// can find it and write to token
+                    clientSessionCtx
+						.getClientSession()
+						.setNote(SCOPE_LAUNCH_PATIENT, noteValue);
                     OIDCAttributeMapperHelper.mapClaim(token, mappingModel, noteValue);
                     return;
                 }
