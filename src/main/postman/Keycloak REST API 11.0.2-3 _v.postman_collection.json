@@ -1,0 +1,409 @@
+{
+	"info": {
+		"_postman_id": "c4f5a121-6569-48ad-91b6-8a682f8d0cf8",
+		"name": "Keycloak REST API 11.0.2-3 _v",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "get users, clients etc",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{kc_admin_realm}}/{{realm}}/clients",
+					"host": [
+						"{{kc_admin_realm}}"
+					],
+					"path": [
+						"{{realm}}",
+						"clients"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List auth flows",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{kc_admin_realm}}/{{realm}}/authentication/flows",
+					"host": [
+						"{{kc_admin_realm}}"
+					],
+					"path": [
+						"{{realm}}",
+						"authentication",
+						"flows"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List auth flows executions",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{kc_admin_realm}}/{{realm}}/authentication/flows/SMART Browser/executions",
+					"host": [
+						"{{kc_admin_realm}}"
+					],
+					"path": [
+						"{{realm}}",
+						"authentication",
+						"flows",
+						"SMART Browser",
+						"executions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List auth flows executions  of Custom Flow",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{kc_admin_realm}}/{{realm}}/authentication/flows/SMART Browser/executions",
+					"host": [
+						"{{kc_admin_realm}}"
+					],
+					"path": [
+						"{{realm}}",
+						"authentication",
+						"flows",
+						"SMART Browser",
+						"executions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Enable auth flows executions  of Custom Flow",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": \"1a6681d1-ead6-4a52-9c33-eb8ea402c8d5\",\n        \"requirement\": \"ALTERNATIVE\",\n        \"displayName\": \"OTP Form\",\n        \"requirementChoices\": [\n            \"REQUIRED\",\n            \"ALTERNATIVE\",\n            \"DISABLED\"\n        ],\n        \"configurable\": false,\n        \"providerId\": \"auth-otp-form\",\n        \"level\": 0,\n        \"index\": 0\n    }"
+				},
+				"url": {
+					"raw": "{{kc_admin_realm}}/{{realm}}/authentication/flows/SMART Browser 2/executions",
+					"host": [
+						"{{kc_admin_realm}}"
+					],
+					"path": [
+						"{{realm}}",
+						"authentication",
+						"flows",
+						"SMART Browser 2",
+						"executions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create custom flow",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \n        \"alias\": \"SMART Browser 2\",\n        \"description\": \"browser based authentication\",\n        \"providerId\": \"basic-flow\",\n        \"topLevel\": true,\n        \"builtIn\": false,\n        \"authenticationExecutions\": [\n            {\n                \"authenticator\": \"auth-cookie\",\n                \"requirement\": \"ALTERNATIVE\",\n                \"priority\": 10,\n                \"userSetupAllowed\": false,\n                \"autheticatorFlow\": false\n            },\n            {\n                \"authenticator\": \"auth-spnego\",\n                \"requirement\": \"DISABLED\",\n                \"priority\": 20,\n                \"userSetupAllowed\": false,\n                \"autheticatorFlow\": false\n            },\n            {\n                \"authenticator\": \"identity-provider-redirector\",\n                \"requirement\": \"ALTERNATIVE\",\n                \"priority\": 25,\n                \"userSetupAllowed\": false,\n                \"autheticatorFlow\": false\n            },\n            {\n                \"requirement\": \"ALTERNATIVE\",\n                \"priority\": 30,\n                \"flowAlias\": \"SMART2 Browser forms\",\n                \"userSetupAllowed\": false,\n                \"autheticatorFlow\": true\n            }\n        ]\n    }"
+				},
+				"url": {
+					"raw": "{{kc_admin_realm}}/{{realm}}/authentication/flows",
+					"host": [
+						"{{kc_admin_realm}}"
+					],
+					"path": [
+						"{{realm}}",
+						"authentication",
+						"flows"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set executions of custom Flow",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"provider\": \"smart-launch-context-authenticator\"}"
+				},
+				"url": {
+					"raw": "{{kc_admin_realm}}/{{realm}}/authentication/flows/SMART Browser 2/executions/execution",
+					"host": [
+						"{{kc_admin_realm}}"
+					],
+					"path": [
+						"{{realm}}",
+						"authentication",
+						"flows",
+						"SMART Browser 2",
+						"executions",
+						"execution"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set executions of custom Flow 2",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"provider\": \"auth-otp-form\"}"
+				},
+				"url": {
+					"raw": "{{kc_admin_realm}}/{{realm}}/authentication/flows/SMART Browser 2/executions/execution",
+					"host": [
+						"{{kc_admin_realm}}"
+					],
+					"path": [
+						"{{realm}}",
+						"authentication",
+						"flows",
+						"SMART Browser 2",
+						"executions",
+						"execution"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Set execution coordinates of custom Flow",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\"provider\": \"auth-otp-form\"}"
+				},
+				"url": {
+					"raw": "{{kc_admin_realm}}/{{realm}}/authentication/flows/SMART Browser 2/executions/execution",
+					"host": [
+						"{{kc_admin_realm}}"
+					],
+					"path": [
+						"{{realm}}",
+						"authentication",
+						"flows",
+						"SMART Browser 2",
+						"executions",
+						"execution"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List auth providers",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{kc_admin_realm}}/{{realm}}/authentication/authenticator-providers",
+					"host": [
+						"{{kc_admin_realm}}"
+					],
+					"path": [
+						"{{realm}}",
+						"authentication",
+						"authenticator-providers"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create CLIENT",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"id\": \"9e93a5f6-2550-4577-ac0b-d61838baabff\",\n        \"clientId\": \"client-from-rest-api\",\n        \"rootUrl\": \"http://localhost:9011/\",\n        \"surrogateAuthRequired\": false,\n        \"enabled\": true,\n        \"alwaysDisplayInConsole\": false,\n        \"clientAuthenticatorType\": \"client-secret\",\n        \"redirectUris\": [\n            \"http://localhost:9090/*\"\n        ],\n        \"webOrigins\": [\n            \"*\"\n        ],\n        \"notBefore\": 0,\n        \"bearerOnly\": false,\n        \"consentRequired\": false,\n        \"standardFlowEnabled\": true,\n        \"implicitFlowEnabled\": false,\n        \"directAccessGrantsEnabled\": true,\n        \"serviceAccountsEnabled\": false,\n        \"publicClient\": true,\n        \"frontchannelLogout\": false,\n        \"protocol\": \"openid-connect\",\n        \"attributes\": {\n            \"saml.assertion.signature\": \"false\",\n            \"access.token.lifespan\": \"36000\",\n            \"saml.force.post.binding\": \"false\",\n            \"saml.multivalued.roles\": \"false\",\n            \"saml.encrypt\": \"false\",\n            \"saml.server.signature\": \"false\",\n            \"saml.server.signature.keyinfo.ext\": \"false\",\n            \"exclude.session.state.from.auth.response\": \"false\",\n            \"saml_force_name_id_format\": \"false\",\n            \"saml.client.signature\": \"false\",\n            \"tls.client.certificate.bound.access.tokens\": \"false\",\n            \"saml.authnstatement\": \"false\",\n            \"display.on.consent.screen\": \"false\",\n            \"saml.onetimeuse.condition\": \"false\"\n        },\n        \"authenticationFlowBindingOverrides\": {\n            \"browser\": \"09b3b12f-f860-4fe3-94d5-c13ec124e29b\"\n        },\n        \"fullScopeAllowed\": true,\n        \"nodeReRegistrationTimeout\": -1,\n        \"defaultClientScopes\": [\n            \"web-origins\",\n            \"role_list\",\n            \"openid\",\n            \"profile\",\n            \"roles\",\n            \"email\"\n        ],\n        \"optionalClientScopes\": [\n            \"address\",\n            \"launch/patient\",\n            \"phone\",\n            \"offline_access\",\n            \"microprofile-jwt\",\n            \"patient/*.*\"\n        ],\n        \"access\": {\n            \"view\": true,\n            \"configure\": true,\n            \"manage\": true\n        }\n    }"
+				},
+				"url": {
+					"raw": "{{kc_admin_realm}}/{{realm}}/clients",
+					"host": [
+						"{{kc_admin_realm}}"
+					],
+					"path": [
+						"{{realm}}",
+						"clients"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete CLIENT",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n        \"clientId\": \"client-from-rest-api\",\n        \"rootUrl\": \"http://localhost:9011/\",\n        \"surrogateAuthRequired\": false,\n        \"enabled\": true,\n        \"alwaysDisplayInConsole\": false,\n        \"clientAuthenticatorType\": \"client-secret\",\n        \"redirectUris\": [\n            \"http://localhost:9090/*\"\n        ],\n        \"webOrigins\": [\n            \"*\"\n        ],\n        \"notBefore\": 0,\n        \"bearerOnly\": false,\n        \"consentRequired\": false,\n        \"standardFlowEnabled\": true,\n        \"implicitFlowEnabled\": false,\n        \"directAccessGrantsEnabled\": true,\n        \"serviceAccountsEnabled\": false,\n        \"publicClient\": true,\n        \"frontchannelLogout\": false,\n        \"protocol\": \"openid-connect\",\n        \"attributes\": {\n            \"saml.assertion.signature\": \"false\",\n            \"access.token.lifespan\": \"36000\",\n            \"saml.force.post.binding\": \"false\",\n            \"saml.multivalued.roles\": \"false\",\n            \"saml.encrypt\": \"false\",\n            \"saml.server.signature\": \"false\",\n            \"saml.server.signature.keyinfo.ext\": \"false\",\n            \"exclude.session.state.from.auth.response\": \"false\",\n            \"saml_force_name_id_format\": \"false\",\n            \"saml.client.signature\": \"false\",\n            \"tls.client.certificate.bound.access.tokens\": \"false\",\n            \"saml.authnstatement\": \"false\",\n            \"display.on.consent.screen\": \"false\",\n            \"saml.onetimeuse.condition\": \"false\"\n        },\n        \"authenticationFlowBindingOverrides\": {\n            \"browser\": \"09b3b12f-f860-4fe3-94d5-c13ec124e29b\"\n        },\n        \"fullScopeAllowed\": true,\n        \"nodeReRegistrationTimeout\": -1,\n        \"defaultClientScopes\": [\n            \"web-origins\",\n            \"role_list\",\n            \"openid\",\n            \"profile\",\n            \"roles\",\n            \"email\"\n        ],\n        \"optionalClientScopes\": [\n            \"address\",\n            \"launch/patient\",\n            \"phone\",\n            \"offline_access\",\n            \"microprofile-jwt\",\n            \"patient/*.*\"\n        ],\n        \"access\": {\n            \"view\": true,\n            \"configure\": true,\n            \"manage\": true\n        }\n    }"
+				},
+				"url": {
+					"raw": "{{kc_admin_realm}}/{{realm}}/clients/9e93a5f6-2550-4577-ac0b-d61838baabff",
+					"host": [
+						"{{kc_admin_realm}}"
+					],
+					"path": [
+						"{{realm}}",
+						"clients",
+						"9e93a5f6-2550-4577-ac0b-d61838baabff"
+					],
+					"query": [
+						{
+							"key": "",
+							"value": null,
+							"disabled": true
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "accessTokenUrl",
+				"value": "http://localhost:8088/auth/realms/master/protocol/openid-connect/token",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "admin-cli",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "password_credentials",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "openid",
+				"type": "string"
+			},
+			{
+				"key": "password",
+				"value": "ehrBase",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "admin",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "kc_admin_realm",
+			"value": "http://localhost:8088/auth/admin/realms"
+		},
+		{
+			"key": "realm",
+			"value": "master"
+		}
+	]
+}

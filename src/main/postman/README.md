@@ -1,3 +1,6 @@
+##Postman collections for tests and automating keycloak
+
+### Smart on fhir postman collection
 This postman collection contains various calls a SMART ON FHIR client could make to a SMART ON FHIR (SOF) endpoint. 
 
 The current scope of this collection is limited to limited scope of proof of concept SOF application implementation in NUM transactional repository, i.e. a standalone patient app making calls to list and create Conditions
@@ -36,3 +39,11 @@ This call retrieves the patient resource from the demographic repository. Since 
 - Search conditions
 
 Demonstrates how a FHIR resource can be retrieved by using the patient compartment of the resource as the query criteria. The query parameter should match the fhir reference to the patient who acquired the token as the user.
+
+##Keycloak REST API collection
+
+This collection contains calls that perform administrative tasks using REST API of Keycloak. 
+
+These tasks are currently performed via the UI of Keycloak, but as requirements are clarified, NUM Transactional Platform should introduce its own user interface and facilities to perform these tasks, specific to applications to be used on the transtactional platform, such as SMART ON FHIR APPs.
+
+The calls in this collection are not complete. More APIs need to be used to fully replicate the process performed from the UI. This effort will take place once requirements are clarified.
