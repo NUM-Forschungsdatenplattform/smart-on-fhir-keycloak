@@ -103,6 +103,10 @@ Since this client won't be getting access tokens via a login form, it won't need
 
 Once there are in place, you can acquire tokens from Postman, using Password Credentials Grant type.
 
+### Postman collection for calls to SOF endpoint
+
+The *postman* folder under *src/main/* contains a Postman collection with sample calls from Postman, mimicking a SOF app. Please see the dedicated README in the *postman* folder re explanation of these calls. 
+
 ### Acknowledgements
 [Igia project](https://igia.github.io/) provides a great amount of valuable know-how and this plugin started based on some of the work done in their Keycloak plugin. Where relevant, the source code level licence statements are kept in place if some code in this repository is based on code written by the Igia team, which is MPL 2.0 with a Healthcare disclaimer. This license is included in this repository, named MPL-LICENSE-HCD.txt
 
