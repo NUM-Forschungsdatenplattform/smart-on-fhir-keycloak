@@ -85,7 +85,11 @@ After the steps above, we now have a custom Authentication flow. Create a client
 
 Go to client scopes of this app and make openid a default scope. Add launch/patient and patient/*.* scopes as optional.
 
-Following these steps, your app should now use the Keycloak plugin. Whenever a user attempts to login, they'll initially create a user. During the user creation, Keycloak plugin will make calls to demographic server and fhir bridge services to create a patient fhir resource and an openEHR EHR for the newly registered user, and patient resource id will be included in all the access tokens created after successful login.  
+Following these steps, your app should now use the Keycloak plugin. Whenever a user attempts to login, they'll initially create a user. During the user creation, Keycloak plugin will make calls to demographic server and fhir bridge services to create a patient fhir resource and an openEHR EHR for the newly registered user, and patient resource id will be included in all the access tokens created after successful login.
+
+### Acknowledgements
+[Igia project](https://igia.github.io/) provides a great amount of valuable know-how and this plugin started based on some of the work done in their Keycloak plugin. Where relevant, the source code level licence statements are kept in place if some code in this repository is based on code written by the Igia team, which is MPL 2.0 with a Healthcare disclaimer. This license is included in this repository, named MPL-LICENSE-HCD.txt
+
 
 
 
