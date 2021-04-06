@@ -1,0 +1,67 @@
+version: 2.1
+
+workflows:
+  version: 2
+  build_and_deploy:
+    jobs:
+      - tag_version:
+          filters:
+            branches:
+              only:
+                - /^(release\/v\d+\.\d+\.\d+|hotfix\/v\d+\.\d+\.\d+)$/
+      - build_and_deploy:
+          context: org-global
+          filters:
+            branches:
+              only:
+                - /^(release\/v\d+\.\d+\.\d+|hotfix\/v\d+\.\d+\.\d+|master|develop)$/
+
+jobs:
+  tag_version:
+    docker:
+      - image: circleci/openjdk:stretch
+    steps:
+      - checkout
+      - add_ssh_keys:
+          fingerprints:
+            - "e4:cf:b8:50:4f:6d:2f:af:00:0d:9d:e4:6d:61:29:d9"
+      - run:
+          name: Update Snapshot Develop Version
+          command: |
+            git config user.email "50235421+ehrbase-tech-user@users.noreply.github.com"
+            git config user.name "ci-bot"
+            VERSION_NUMBER="$(echo $CIRCLE_BRANCH | awk -F'/v' '{print $2;}')"
+            echo "Updating the application version from the branch to ${VERSION_NUMBER}"
+            ./mvnw versions:set -DnewVersion=$VERSION_NUMBER versions:commit
+
+            git commit -am "updated version to ${VERSION_NUMBER} [skip ci]"
+            git tag -a v$VERSION_NUMBER -m "smart-on-fhir-keycloak release version v${VERSION_NUMBER}"
+            git push --set-upstream origin $CIRCLE_BRANCH
+            git push origin --tags
+
+
+  build_and_deploy:
+    docker:
+      - image: circleci/openjdk:stretch
+        auth:
+          username: $DOCKER_USER
+          password: $DOCKER_HUB_PASSWORD
+    steps:
+      - checkout
+      - setup_remote_docker:
+          version: 19.03.13
+          docker_layer_caching: true
+      - run:
+          name: Build and tag image and push
+          command: |
+            if [ $CIRCLE_BRANCH = "master" ]; then
+              TAG=$(./mvnw -q -Dexec.executable="echo" -Dexec.args='${project.version}' --non-recursive exec:exec)
+            elif [ $CIRCLE_BRANCH = "develop" ]; then
+              TAG=$CIRCLE_BRANCH
+            else
+              TAG="$(echo $CIRCLE_BRANCH | awk -F'/' '{print $2;}')-rc"
+            fi
+            mvn package
+            docker build -t $DOCKER_USER/smart-on-fhir-keycloak:$TAG .
+            echo "$DOCKER_HUB_PASSWORD" | docker login -u "$DOCKER_USER" --password-stdin
+            docker push $DOCKER_USER/smart-on-fhir-keycloak:$TAG
