@@ -81,11 +81,40 @@ With the plugins in place, we can now create a custom authentication flow for ou
     From Events section, go to Config tab and add ```SMART_on_FHIR_Event_Listener``` to the list of active event listeners  
 
 ### Creating a SMART ON FHIR APP on Keycloak
-After the steps above, we now have a custom Authentication flow. Create a client suitable for an SPA (public) and go to Authentication Flow Overrides. Select SMART Browser (or whatever you named the custom flow you created above). 
+After the steps above, we now have a custom Authentication flow. Create a client suitable for an SPA (public) and go to Authentication Flow Overrides. For Browser Flow, select SMART Browser (or whatever you named the custom flow you created above). 
 
 Go to client scopes of this app and make openid a default scope. Add launch/patient and patient/*.* scopes as optional.
 
-Following these steps, your app should now use the Keycloak plugin. Whenever a user attempts to login, they'll initially create a user. During the user creation, Keycloak plugin will make calls to demographic server and fhir bridge services to create a patient fhir resource and an openEHR EHR for the newly registered user, and patient resource id will be included in all the access tokens created after successful login.  
+Following these steps, your app should now use the Keycloak plugin. Whenever a user attempts to login, they'll initially create a user. During the user creation, Keycloak plugin will make calls to demographic server and fhir bridge services to create a patient fhir resource and an openEHR EHR for the newly registered user, and patient resource id will be included in all the access tokens created after successful login.
+### Creating a Test Client for SMART ON FHIR on Keycloak
+You may need a non-browser client such as Postman or Insomnia to test this plugin. In that case, this client should be registered as an OAuth client on Keycloak. The following settings are required to register such a client:
+
+- Client ID: Sof-test
+- Enabled: ON
+- Client protocol: openid-connect
+- Access type: confidential
+- Standard flow enabled: OFF
+- Direct Access Grants Enabled: ON
+- Service Accounts Enabled: ON
+
+Settings not mentioned above are either OFF or empty or left with their default values.
+
+Since this client won't be getting access tokens via a login form, it won't need to override browser flow, but it will need to override Direct Grant Flow. For this to happen, we need a customised Direct Grant Flow. Just like the above browser app approach, make a copy of the built in Direct Grant (from under Authentication). Add a custom execution in the same way described above, which should be at the root level but at the bottom of executions. This execution should have REQUIRED set to requirement. 
+
+Once there are in place, you can acquire tokens from Postman, using Password Credentials Grant type.
+
+### Postman collection for calls to SOF endpoint
+
+The *postman* folder under *src/main/* contains a Postman collection with sample calls from Postman, mimicking a SOF app. Please see the dedicated README in the *postman* folder re explanation of these calls.
+
+### Postman collections for calls to Keycloak Admin API
+Similar to postman collection for SOF endpoint, please see the *postman* folder and relevant README file.
+
+### Acknowledgements
+[Igia project](https://igia.github.io/) provides a great amount of valuable know-how and this plugin started based on some of the work done in their Keycloak plugin. Where relevant, the source code level licence statements are kept in place if some code in this repository is based on code written by the Igia team, which is MPL 2.0 with a Healthcare disclaimer. This license is included in this repository, named MPL-LICENSE-HCD.txt
+
+[HAPI FHIR project](https://hapifhir.io/) is a substantial  implementation of FHIR which is used by other components of the NUM platform as well. This plugin uses the libraries provided by this project while making calls to (FHIR) demographic services. These libraries are included in this repository and they are also subject to the Apache 2.0 license this plugin is distributed under.
+
 
 
 

@@ -1,0 +1,327 @@
+{
+	"info": {
+		"_postman_id": "488980d5-f2fa-46f2-8818-3fbf74b5b1d5",
+		"name": "SMART on FHIR _v",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Smart On Fhir Metadata",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set('patient_Id', '1');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\": \"Condition\",\n  \"id\": \"example\",\n  \"text\": {\n    \"status\": \"generated\",\n    \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\">Severe burn of left ear (Date: 24-May 2012)</div>\"\n  },\n  \"clinicalStatus\": {\n    \"coding\": [\n      {\n        \"system\": \"http://terminology.hl7.org/CodeSystem/condition-clinical\",\n        \"code\": \"active\"\n      }\n    ]\n  },\n  \"verificationStatus\": {\n    \"coding\": [\n      {\n        \"system\": \"http://terminology.hl7.org/CodeSystem/condition-ver-status\",\n        \"code\": \"confirmed\"\n      }\n    ]\n  },\n  \"category\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"http://terminology.hl7.org/CodeSystem/condition-category\",\n          \"code\": \"encounter-diagnosis\",\n          \"display\": \"Encounter Diagnosis\"\n        },\n        {\n          \"system\": \"http://snomed.info/sct\",\n          \"code\": \"439401001\",\n          \"display\": \"Diagnosis\"\n        }\n      ]\n    }\n  ],\n  \"severity\": {\n    \"coding\": [\n      {\n        \"system\": \"http://snomed.info/sct\",\n        \"code\": \"24484000\",\n        \"display\": \"Severe\"\n      }\n    ]\n  },\n  \"code\": {\n    \"coding\": [\n      {\n        \"system\": \"http://fhir.de/CodeSystem/dimdi/icd-10-gm\",\n        \"code\": \"B97.2\",\n        \"display\": \"Coronavirus as the cause of diseases classified to other chapters\"\n      }\n    ],\n    \"text\": \"Coronavirus as the cause of diseases classified to other chapters\"\n  },\n  \"bodySite\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"http://snomed.info/sct\",\n          \"code\": \"49521004\",\n          \"display\": \"Left external ear structure\"\n        }\n      ],\n      \"text\": \"Left Ear\"\n    }\n  ],\n  \"subject\": {\n    \"identifier\": {\n        \"system\": \"urn:jboss:domain:keycloak:1.1\",\n        \"value\": \"0c1d3755-bfe0-492f-9152-adff89879bdc\"\n    },      \n    \"reference\": \"http://localhost:8082/fhir/Patient/63\",\n    \"type\": \"Patient\"\n      \n    \n  },\n  \"onsetDateTime\": \"2012-05-24\",\n  \"recorder\": {\n    \"reference\": \"http://external.fhir.server/Practitioner/f201\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{demographic_base}}/.well-known/smart-configuration",
+					"host": [
+						"{{demographic_base}}"
+					],
+					"path": [
+						".well-known",
+						"smart-configuration"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create Condition: must have  allowed subject.identifier.value and subject.reference",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set('patient_Id', '1');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\": \"Condition\",\n  \"id\": \"example\",\n  \"text\": {\n    \"status\": \"generated\",\n    \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\">Severe burn of left ear (Date: 24-May 2012)</div>\"\n  },\n  \"clinicalStatus\": {\n    \"coding\": [\n      {\n        \"system\": \"http://terminology.hl7.org/CodeSystem/condition-clinical\",\n        \"code\": \"active\"\n      }\n    ]\n  },\n  \"verificationStatus\": {\n    \"coding\": [\n      {\n        \"system\": \"http://terminology.hl7.org/CodeSystem/condition-ver-status\",\n        \"code\": \"confirmed\"\n      }\n    ]\n  },\n  \"category\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"http://terminology.hl7.org/CodeSystem/condition-category\",\n          \"code\": \"encounter-diagnosis\",\n          \"display\": \"Encounter Diagnosis\"\n        },\n        {\n          \"system\": \"http://snomed.info/sct\",\n          \"code\": \"439401001\",\n          \"display\": \"Diagnosis\"\n        }\n      ]\n    }\n  ],\n  \"severity\": {\n    \"coding\": [\n      {\n        \"system\": \"http://snomed.info/sct\",\n        \"code\": \"24484000\",\n        \"display\": \"Severe\"\n      }\n    ]\n  },\n  \"code\": {\n    \"coding\": [\n      {\n        \"system\": \"http://fhir.de/CodeSystem/dimdi/icd-10-gm\",\n        \"code\": \"B97.2\",\n        \"display\": \"Coronavirus as the cause of diseases classified to other chapters\"\n      }\n    ],\n    \"text\": \"Coronavirus as the cause of diseases classified to other chapters\"\n  },\n  \"bodySite\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"http://snomed.info/sct\",\n          \"code\": \"49521004\",\n          \"display\": \"Left external ear structure\"\n        }\n      ],\n      \"text\": \"Left Ear\"\n    }\n  ],\n  \"subject\": {\n    \"identifier\": {\n        \"system\": \"urn:jboss:domain:keycloak:1.1\",\n        \"value\": \"a0d9c4ac-0882-482e-90a8-1eb05d6cefd2\"\n    },      \n    \"reference\": \"http://localhost:8082/fhir/Patient/466\",\n    \"type\": \"Patient\"\n      \n    \n  },\n  \"onsetDateTime\": \"2012-05-24\",\n  \"recorder\": {\n    \"reference\": \"http://external.fhir.server/Practitioner/f201\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{fhir_base}}/Condition",
+					"host": [
+						"{{fhir_base}}"
+					],
+					"path": [
+						"Condition"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Update Condition - Not supported yet",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set('patient_Id', '1');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\": \"Condition\",\n  \"id\": \"example\",\n  \"text\": {\n    \"status\": \"generated\",\n    \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\">Severe burn of left ear (Date: 24-May 2012)</div>\"\n  },\n  \"clinicalStatus\": {\n    \"coding\": [\n      {\n        \"system\": \"http://terminology.hl7.org/CodeSystem/condition-clinical\",\n        \"code\": \"active\"\n      }\n    ]\n  },\n  \"verificationStatus\": {\n    \"coding\": [\n      {\n        \"system\": \"http://terminology.hl7.org/CodeSystem/condition-ver-status\",\n        \"code\": \"confirmed\"\n      }\n    ]\n  },\n  \"category\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"http://terminology.hl7.org/CodeSystem/condition-category\",\n          \"code\": \"encounter-diagnosis\",\n          \"display\": \"Encounter Diagnosis\"\n        },\n        {\n          \"system\": \"http://snomed.info/sct\",\n          \"code\": \"439401001\",\n          \"display\": \"Diagnosis\"\n        }\n      ]\n    }\n  ],\n  \"severity\": {\n    \"coding\": [\n      {\n        \"system\": \"http://snomed.info/sct\",\n        \"code\": \"24484000\",\n        \"display\": \"Severe\"\n      }\n    ]\n  },\n  \"code\": {\n    \"coding\": [\n      {\n        \"system\": \"http://fhir.de/CodeSystem/dimdi/icd-10-gm\",\n        \"code\": \"B97.2\",\n        \"display\": \"Coronavirus as the cause of diseases classified to other chapters\"\n      }\n    ],\n    \"text\": \"Coronavirus as the cause of diseases classified to other chapters\"\n  },\n  \"bodySite\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"http://snomed.info/sct\",\n          \"code\": \"49521004\",\n          \"display\": \"Left external ear structure\"\n        }\n      ],\n      \"text\": \"Left Ear\"\n    }\n  ],\n  \"subject\": {\n    \"identifier\": {\n        \"system\": \"urn:jboss:domain:keycloak:1.1\",\n        \"value\": \"0c1d3755-bfe0-492f-9152-adff89879bdc\"\n    },      \n    \"reference\": \"http://localhost:8082/fhir/Patient/63\",\n    \"type\": \"Patient\"\n      \n    \n  },\n  \"onsetDateTime\": \"2012-05-24\",\n  \"recorder\": {\n    \"reference\": \"http://external.fhir.server/Practitioner/f201\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{fhir_base}}/Condition",
+					"host": [
+						"{{fhir_base}}"
+					],
+					"path": [
+						"Condition"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List Conditions (will be denied with 403)",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"pm.environment.set('patient_Id', '1');"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n  \"resourceType\": \"Condition\",\n  \"id\": \"example\",\n  \"text\": {\n    \"status\": \"generated\",\n    \"div\": \"<div xmlns=\\\"http://www.w3.org/1999/xhtml\\\">Severe burn of left ear (Date: 24-May 2012)</div>\"\n  },\n  \"clinicalStatus\": {\n    \"coding\": [\n      {\n        \"system\": \"http://terminology.hl7.org/CodeSystem/condition-clinical\",\n        \"code\": \"active\"\n      }\n    ]\n  },\n  \"verificationStatus\": {\n    \"coding\": [\n      {\n        \"system\": \"http://terminology.hl7.org/CodeSystem/condition-ver-status\",\n        \"code\": \"confirmed\"\n      }\n    ]\n  },\n  \"category\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"http://terminology.hl7.org/CodeSystem/condition-category\",\n          \"code\": \"encounter-diagnosis\",\n          \"display\": \"Encounter Diagnosis\"\n        },\n        {\n          \"system\": \"http://snomed.info/sct\",\n          \"code\": \"439401001\",\n          \"display\": \"Diagnosis\"\n        }\n      ]\n    }\n  ],\n  \"severity\": {\n    \"coding\": [\n      {\n        \"system\": \"http://snomed.info/sct\",\n        \"code\": \"24484000\",\n        \"display\": \"Severe\"\n      }\n    ]\n  },\n  \"code\": {\n    \"coding\": [\n      {\n        \"system\": \"http://fhir.de/CodeSystem/dimdi/icd-10-gm\",\n        \"code\": \"B97.2\",\n        \"display\": \"Coronavirus as the cause of diseases classified to other chapters\"\n      }\n    ],\n    \"text\": \"Coronavirus as the cause of diseases classified to other chapters\"\n  },\n  \"bodySite\": [\n    {\n      \"coding\": [\n        {\n          \"system\": \"http://snomed.info/sct\",\n          \"code\": \"49521004\",\n          \"display\": \"Left external ear structure\"\n        }\n      ],\n      \"text\": \"Left Ear\"\n    }\n  ],\n  \"subject\": {\n    \"identifier\": {\n        \"system\": \"urn:jboss:domain:keycloak:1.1\",\n        \"value\": \"0c1d3755-bfe0-492f-9152-adff89879bdc\"\n    },      \n    \"reference\": \"http://localhost:8082/fhir/Patient/63\",\n    \"type\": \"Patient\"\n      \n    \n  },\n  \"onsetDateTime\": \"2012-05-24\",\n  \"recorder\": {\n    \"reference\": \"http://external.fhir.server/Practitioner/f201\"\n  }\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{fhir_base}}/Condition",
+					"host": [
+						"{{fhir_base}}"
+					],
+					"path": [
+						"Condition"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "create EHR",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "{{fhir_bridge_base}}/ehradmin?pPatientId=tst4",
+					"host": [
+						"{{fhir_bridge_base}}"
+					],
+					"path": [
+						"ehradmin"
+					],
+					"query": [
+						{
+							"key": "pPatientId",
+							"value": "tst4"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get DEMOGRAPHIC Patient Resource (must use allowed patient id)",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{demographic_base}}/Patient/468",
+					"host": [
+						"{{demographic_base}}"
+					],
+					"path": [
+						"Patient",
+						"468"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search Conditions",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{fhir_base}}/Condition?subject={{demographic_base}}/Patient/468&_count=100",
+					"host": [
+						"{{fhir_base}}"
+					],
+					"path": [
+						"Condition"
+					],
+					"query": [
+						{
+							"key": "subject",
+							"value": "{{demographic_base}}/Patient/468"
+						},
+						{
+							"key": "_count",
+							"value": "100"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "oauth2",
+		"oauth2": [
+			{
+				"key": "password",
+				"value": "eddie",
+				"type": "string"
+			},
+			{
+				"key": "username",
+				"value": "eddie",
+				"type": "string"
+			},
+			{
+				"key": "clientSecret",
+				"value": "8961e633-0b44-4782-a0ce-f47565c62e61",
+				"type": "string"
+			},
+			{
+				"key": "tokenName",
+				"value": "seref1",
+				"type": "string"
+			},
+			{
+				"key": "scope",
+				"value": "openid profile launch/patient",
+				"type": "string"
+			},
+			{
+				"key": "grant_type",
+				"value": "password_credentials",
+				"type": "string"
+			},
+			{
+				"key": "accessTokenUrl",
+				"value": "http://localhost:8088/auth/realms/master/protocol/openid-connect/token",
+				"type": "string"
+			},
+			{
+				"key": "clientId",
+				"value": "SOF-test",
+				"type": "string"
+			},
+			{
+				"key": "addTokenTo",
+				"value": "header",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "fhir_base",
+			"value": "http://localhost:8888/fhir-bridge/fhir"
+		},
+		{
+			"key": "fhir_bridge_base",
+			"value": "http://localhost:8888/fhir-bridge"
+		},
+		{
+			"key": "demographic_base",
+			"value": "http://localhost:8082/fhir"
+		}
+	]
+}
