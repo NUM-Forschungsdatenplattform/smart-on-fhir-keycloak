@@ -6,7 +6,7 @@
 
   <groupId>de.vita.num.smart</groupId>
   <artifactId>keycloak-plugin</artifactId>
-  <version>0.1-SNAPSHOT</version>
+  <version>1.0.0</version>
 
   <name>keycloak-plugin</name>
   <url>https://github.com/NUM-Forschungsdatenplattform/smart-on-fhir-keycloak</url>
