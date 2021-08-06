@@ -111,7 +111,7 @@ The *postman* folder under *src/main/* contains a Postman collection with sample
 Similar to postman collection for SOF endpoint, please see the *postman* folder and relevant README file.
 
 ### Acknowledgements
-[Igia project](https://igia.github.io/) provides a great amount of valuable know-how and this plugin started based on some of the work done in their Keycloak plugin. Where relevant, the source code level licence statements are kept in place if some code in this repository is based on code written by the Igia team, which is MPL 2.0 with a Healthcare disclaimer. This license is included in this repository, named MPL-LICENSE-HCD.txt
+[Igia project](https://igia.github.io/) provides a great amount of valuable know-how and this plugin started based on some of the work done in their Keycloak plugin. Where relevant, the source code level licence statements are kept in place if some code in this repository is based on code written by the Igia team, which is MPL 2.0 with a Healthcare disclaimer. This license is included in the NOTICE.md file.
 
 [HAPI FHIR project](https://hapifhir.io/) is a substantial  implementation of FHIR which is used by other components of the NUM platform as well. This plugin uses the libraries provided by this project while making calls to (FHIR) demographic services. These libraries are included in this repository and they are also subject to the Apache 2.0 license this plugin is distributed under.
 
